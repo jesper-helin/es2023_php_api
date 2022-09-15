@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $concert_id
  * 
  * @property Concert $concert
+ * @property Collection|SeatRow[] $seat_rows
  *
  * @package App\Models
  */
@@ -46,5 +48,10 @@ class Show extends Model
 	public function concert()
 	{
 		return $this->belongsTo(Concert::class);
+	}
+
+	public function seat_rows()
+	{
+		return $this->hasMany(SeatRow::class);
 	}
 }

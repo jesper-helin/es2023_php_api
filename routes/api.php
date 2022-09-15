@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\v1\ConcertsController;
+use App\Http\Controllers\v1\SeatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,4 @@ use App\Http\Controllers\v1\ConcertsController;
 
 Route::get('v1/concerts', [ConcertsController::class, 'index']);
 Route::get('v1/concerts/{concertID}', [ConcertsController::class, 'show']);
+Route::get('v1/concerts/{concertID}/shows/{showID}/seating', [SeatingController::class, 'index']);
