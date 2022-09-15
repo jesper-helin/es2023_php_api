@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15.09.2022 klo 09:58
+-- Generation Time: 15.09.2022 klo 14:10
 -- Palvelimen versio: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -40,8 +40,8 @@ CREATE TABLE `concert` (
 
 INSERT INTO `concert` (`id`, `artist`, `location_id`) VALUES
 (1, 'Bilderbuch', 1),
-(2, 'Wanda', 1),
-(3, 'Opus', 1);
+(2, 'Wanda', 2),
+(3, 'Opus', 2);
 
 -- --------------------------------------------------------
 
@@ -59,7 +59,49 @@ CREATE TABLE `locations` (
 --
 
 INSERT INTO `locations` (`id`, `name`) VALUES
-(1, 'Oper Graz');
+(1, 'Oper Graz'),
+(2, 'Messe Congr');
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `seats`
+--
+
+CREATE TABLE `seats` (
+  `id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `seat_rows_id` int(11) NOT NULL,
+  `reserved` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Vedos taulusta `seats`
+--
+
+INSERT INTO `seats` (`id`, `number`, `seat_rows_id`, `reserved`) VALUES
+(1, 1, 1, NULL),
+(2, 2, 1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `seat_rows`
+--
+
+CREATE TABLE `seat_rows` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `show_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Vedos taulusta `seat_rows`
+--
+
+INSERT INTO `seat_rows` (`id`, `name`, `show_id`) VALUES
+(1, 'Floor 1', 1),
+(2, 'Floor 2', 1);
 
 -- --------------------------------------------------------
 
@@ -80,7 +122,8 @@ CREATE TABLE `shows` (
 
 INSERT INTO `shows` (`id`, `start`, `end`, `concert_id`) VALUES
 (1, '2022-09-22 09:00:00', '2022-09-22 11:00:00', 1),
-(2, '2022-09-07 06:00:00', '2022-09-07 10:00:00', 1);
+(2, '2022-09-07 06:00:00', '2022-09-07 10:00:00', 1),
+(3, '2022-09-22 00:00:00', '2022-09-22 02:00:00', 3);
 
 --
 -- Indexes for dumped tables
@@ -98,6 +141,20 @@ ALTER TABLE `concert`
 --
 ALTER TABLE `locations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `seats`
+--
+ALTER TABLE `seats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `seat_rows_id` (`seat_rows_id`);
+
+--
+-- Indexes for table `seat_rows`
+--
+ALTER TABLE `seat_rows`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `show_id` (`show_id`);
 
 --
 -- Indexes for table `shows`
@@ -120,13 +177,25 @@ ALTER TABLE `concert`
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `seats`
+--
+ALTER TABLE `seats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `seat_rows`
+--
+ALTER TABLE `seat_rows`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `shows`
 --
 ALTER TABLE `shows`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Rajoitteet vedostauluille
@@ -137,6 +206,18 @@ ALTER TABLE `shows`
 --
 ALTER TABLE `concert`
   ADD CONSTRAINT `location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`);
+
+--
+-- Rajoitteet taululle `seats`
+--
+ALTER TABLE `seats`
+  ADD CONSTRAINT `seat_rows_id` FOREIGN KEY (`seat_rows_id`) REFERENCES `seat_rows` (`id`);
+
+--
+-- Rajoitteet taululle `seat_rows`
+--
+ALTER TABLE `seat_rows`
+  ADD CONSTRAINT `show_id` FOREIGN KEY (`show_id`) REFERENCES `shows` (`id`);
 
 --
 -- Rajoitteet taululle `shows`

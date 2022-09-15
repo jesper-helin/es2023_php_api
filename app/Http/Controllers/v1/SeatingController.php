@@ -4,6 +4,9 @@ namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Concert;
+use App\Models\SeatRow;
+use App\Models\Show;
 
 class SeatingController extends Controller
 {
@@ -14,7 +17,27 @@ class SeatingController extends Controller
      */
     public function index($concertId, $showId)
     {
+        $checkIfConcertExists = Concert::find($concertId);
+        $checkIfShowExists = Show::where('concert_id', '=', $concertId)->find($showId);
+        if(!$checkIfConcertExists || !$checkIfShowExists) {
+            return response()->json([
+                "error" => "A concert or show with this ID does not exist",
+            ], 404);
+        }
         
+        $rows = SeatRow::join('seats', 'seats.seat_rows_id', '=', 'seat_rows.id')->get();
+        // $rows = SeatRow::with(['seats'])->get();
+        // return [
+        //     "rows" => $rows
+        // ];
+        foreach($rows as $row) {
+            return response()->json([
+                "rows" => $rows,
+            ], 200);
+        }
+        // return [
+        //     "rows" => $rows
+        // ];
     }
 
     /**
