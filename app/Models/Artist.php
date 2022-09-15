@@ -26,6 +26,8 @@ class Artist extends Model
 	protected $table = 'artists';
 	public $timestamps = false;
 
+	protected $hidden = ['location_id'];
+
 	protected $casts = [
 		'location_id' => 'int'
 	];

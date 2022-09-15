@@ -26,6 +26,8 @@ class Show extends Model
 	protected $table = 'shows';
 	public $timestamps = false;
 
+	protected $hidden = ['artist_id'];
+
 	protected $casts = [
 		'artist_id' => 'int'
 	];
