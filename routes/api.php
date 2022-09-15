@@ -16,3 +16,4 @@ use App\Http\Controllers\v1\ConcertsController;
 */
 
 Route::get('v1/concerts', [ConcertsController::class, 'index']);
+Route::get('v1/concerts/{concertID}', [ConcertsController::class, 'show']);

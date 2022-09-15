@@ -54,7 +54,21 @@ class ConcertsController extends Controller
      */
     public function show($id)
     {
-        //
+        $checkIfConcertExists = Concert::find($id);
+        if(!$checkIfConcertExists) {
+            return response()->json([
+                "error" => "A concert with this ID does not exist",
+            ], 404);
+        }
+        
+        $sortDirection = 'asc';
+
+        $data = Concert::with(['location', 'shows' => function ($query) use ($sortDirection) {
+            $query->orderBy('start', $sortDirection);
+        }])->orderBy('artist', 'asc')->find($id);
+        return [
+            "concert" => $data,
+        ];
     }
 
     /**
