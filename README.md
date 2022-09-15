@@ -10,4 +10,4 @@
 composer i
 php artisan serve
 ```
-- The endpoints can be reached at http://localhost:8000/api/v1/
+- The api is reachable at http://localhost:8000/api/v1/
