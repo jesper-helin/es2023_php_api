@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Models\Artist;
+use App\Models\Concert;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +17,7 @@ class ConcertsController extends Controller
     {
         $sortDirection = 'asc';
 
-        $data = Artist::with(['location', 'shows' => function ($query) use ($sortDirection) {
+        $data = Concert::with(['location', 'shows' => function ($query) use ($sortDirection) {
             $query->orderBy('start', $sortDirection);
         }])->orderBy('artist', 'asc')->get();
         return [

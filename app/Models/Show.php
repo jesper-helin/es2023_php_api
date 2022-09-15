@@ -15,9 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property Carbon $start
  * @property Carbon $end
- * @property int $artist_id
+ * @property int $concert_id
  * 
- * @property Artist $artist
+ * @property Concert $concert
  *
  * @package App\Models
  */
@@ -26,10 +26,10 @@ class Show extends Model
 	protected $table = 'shows';
 	public $timestamps = false;
 
-	protected $hidden = ['artist_id'];
+	protected $hidden = ['concert_id'];
 
 	protected $casts = [
-		'artist_id' => 'int'
+		'concert_id' => 'int'
 	];
 
 	protected $dates = [
@@ -40,11 +40,11 @@ class Show extends Model
 	protected $fillable = [
 		'start',
 		'end',
-		'artist_id'
+		'concert_id'
 	];
 
-	public function artist()
+	public function concert()
 	{
-		return $this->belongsTo(Artist::class);
+		return $this->belongsTo(Concert::class);
 	}
 }

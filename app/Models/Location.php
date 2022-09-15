@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * 
- * @property Collection|Artist[] $artists
+ * @property Collection|Concert[] $concerts
  *
  * @package App\Models
  */
@@ -28,8 +28,8 @@ class Location extends Model
 		'name'
 	];
 
-	public function artists()
+	public function concerts()
 	{
-		return $this->hasMany(Artist::class);
+		return $this->hasMany(Concert::class);
 	}
 }

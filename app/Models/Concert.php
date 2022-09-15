@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Artist
+ * Class Concert
  * 
  * @property int $id
  * @property string $artist
@@ -21,9 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Artist extends Model
+class Concert extends Model
 {
-	protected $table = 'artists';
+	protected $table = 'concert';
 	public $timestamps = false;
 
 	protected $hidden = ['location_id'];
